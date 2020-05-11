@@ -1,0 +1,60 @@
+@{
+    ViewData["Title"] = "Customers | Store";
+}
+<style>
+    span {
+        color: red;
+        font-size: small;
+    }
+</style>
+
+@model CustWrapper
+<div class="row">
+    <div class="col">
+        <a href="dashboard"> Dashboard </a>|
+        <a href="products"> Products </a>|
+        <a href="orders"> Orders </a>| 
+        Customers |
+        <a href="settings"> Settings </a>
+    </div>
+</div>
+
+<div class="row-col pt-5">
+    <form asp-action="AddCustomer" asp-controller="Home" method="post">
+        <h5>Add a new customer</h5>
+        <div class="form-group row py-3">
+            <div class="col-3">
+                <label asp-for="@Model.Customer.CustomerName">Customer Name: </label>
+            </div>
+            <div class="col-4">
+                <input asp-for="@Model.Customer.CustomerName" type="text" class="form-control">
+                <span asp-validation-for="@Model.Customer.CustomerName"></span>
+            </div>
+            <div class="col-4">
+                <input type="submit" value="Add" class="btn btn-outline-info">
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row-col">
+    <table class="table table-border">
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Created At</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Customer i in @Model.AllCustomers)
+            {
+                <tr>
+                    <td>@i.CustomerName</td>
+                    <td>@i.CreatedAt</td>
+                    <td><a href="remove/@i.CustomerId">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

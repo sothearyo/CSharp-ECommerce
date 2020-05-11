@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Products | Store";
+}
+@model DashboardWrapper
+<div class="row">
+    <div class="col">
+        Dashboard | 
+        <a href="dashboard"> Products </a>|
+        <a href="orders"> Orders </a>|
+        <a href="customers"> Customers </a> |
+        <a href="settings"> Settings </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-2">
+        <div class="row pt-5">
+            <form asp-action="Dashboard" asp-controller="Home" method="get">
+                <div class="form-group row">
+                    <label asp-for="@Model.Search"><h5>Search</h5></label>
+                    <input asp-for="@Model.Search" type="text" class="form-control">
+                    <input type="submit" value="Filter" class="btn btn-outline-info mt-3">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-10 p-5">
+        <div class="row">
+            @foreach(Product i in @Model.RecentProducts)
+            {
+                <div class="col-2 border">
+                    <div class="row-col text-center"><img src="@i.ProductImg" alt="image of @i.ProductName" class="img-fluid"></div>
+                    <div class="row-col text-center">@i.ProductName</div>
+                    <div class="row-col text-center">@i.ProductQty</div>
+                </div>
+            }
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <h5>Recent Orders</h5>
+                    <ul>
+                        @foreach(Order i in @Model.RecentOrders)
+                        {
+                            <li>@i.Customer.CustomerName purchased @i.OrderQty @i.Product.ProductName ... @i.TimeLongAgo</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+@{
+    ViewData["Title"] = "Products | Store";
+}
+@model ProdWrapper
+<div class="row">
+    <div class="col">
+        <a href="dashboard"> Dashboard </a>|
+        Products |
+        <a href="orders"> Orders </a>|
+        <a href="customers"> Customers </a> |
+        <a href="settings"> Settings </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-2">
+        <div class="row pt-5">
+            <form asp-action="Products" asp-controller="Home" method="get">
+                <div class="form-group row">
+                    <label asp-for="@Model.Search"><h5>Search</h5></label>
+                    <input asp-for="@Model.Search" type="text" class="form-control">
+                    <input type="submit" value="Filter" class="btn btn-outline-info mt-3">
+                </div>
+            </form>
+        </div>
+        <div class="row pt-5">
+            <div class="row">
+                <h5>Add a new product</h5>
+            </div>
+            <form asp-action="AddProduct" asp-controller="Home" method="post">
+                <div class="form-group row">
+                    <label asp-for="@Model.Product.ProductName">Name:</label>
+                    <input asp-for="@Model.Product.ProductName" type="text" class="form-control">
+                </div>
+                <div class="form-group row">
+                    <label asp-for="@Model.Product.ProductImg">Image (url):</label>
+                    <input asp-for="@Model.Product.ProductImg" type="text" class="form-control">
+                </div>
+                <div class="form-group row">
+                    <label asp-for="@Model.Product.ProductDesc">Description:</label>
+                    <textarea asp-for="@Model.Product.ProductDesc" type="text" class="form-control"></textarea>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="@Model.Product.ProductQty">Initial Quantity:</label>
+                    <input asp-for="@Model.Product.ProductQty" type="number" min="0" class="form-control">
+                    <input type="submit" value="Create" class="btn btn-outline-info mt-3">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-10 p-5">
+        <div class="row">
+        @foreach(Product i in @Model.AllProducts)
+        {
+            <div class="col-2 border">
+                <div class="row-col text-center"><img src="@i.ProductImg" alt="image of @i.ProductName" class="img-fluid"></div>
+                <div class="row-col text-center">@i.ProductName</div>
+                <div class="row-col text-center">@i.ProductQty</div>
+            </div>
+        }
+
+        </div>
+    </div>
+</div>

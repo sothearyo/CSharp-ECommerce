@@ -1,0 +1,82 @@
+@{
+    ViewData["Title"] = "Orders | Store";
+}
+@model OrdersWrapper
+<div class="row">
+    <div class="col">
+        <a href="dashboard"> Dashboard </a>|
+        <a href="products"> Products </a>|
+        Orders | 
+        <a href="customers"> Customers </a> |
+        <a href="settings"> Settings </a>
+    </div>
+</div>
+
+<div class="row-col pt-5">
+    <form asp-action="AddOrder" asp-controller="Home" method="post">
+        <h5>Add a new order</h5>
+        <div class="form-group row pt-3">
+            <div class="col-2">
+                <label asp-for="@Model.Order.CustomerId">Customer: </label>
+            </div>
+            <div class="col-4">
+                <select asp-for="@Model.Order.CustomerId">
+                    @foreach(Customer i in @Model.AllCustomers)
+                    {
+                        <option value="@i.CustomerId">@i.CustomerName</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="@Model.Order.OrderQty">Order: </label>
+            </div>
+            <div class="col-1">
+                <select asp-for="@Model.Order.OrderQty">
+                    @{
+                        @for (int i = 1; i <= 10; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    }
+                </select>            
+            </div>
+            <div class="col-3">
+                <select asp-for="@Model.Order.ProductId">
+                    @foreach(Product i in @Model.AllProducts)
+                    {
+                        <option value="@i.ProductId">@i.ProductName (@i.ProductQty) left</option>
+                    }
+                </select>
+            </div>
+            <div class="col-1">
+                <input type="submit" value="Add" class="btn btn-outline-info">
+            </div>
+        </div>        
+    </form>
+</div>
+
+<div class="row-col py-5">
+    <table class="table table-border">
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Order i in @Model.AllOrders)
+            {
+                <tr>
+                    <td>@i.Customer.CustomerName</td>
+                    <td>@i.Product.ProductName</td>
+                    <td>@i.OrderQty</td>
+                    <td>@i.CreatedAt</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
